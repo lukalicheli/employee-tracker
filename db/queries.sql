@@ -1,9 +1,11 @@
-DROP DATABASE IF EXISTS departments_db;
-CREATE DATABASE departments_db;
+SELECT *
+FROM deptRole
+JOIN department ON deptRole.department_id = department.id;
 
-USE books_db;
+SELECT *
+FROM employee
+JOIN deptRole ON employee.role_id = deptRole.id;
 
-CREATE TABLE favorite_books (
-  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  book_name VARCHAR(30) NOT NULL
-);
+SELECT *
+FROM employee
+JOIN employee ON employee.manager_id = employee.id;
