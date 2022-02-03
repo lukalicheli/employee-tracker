@@ -1,49 +1,57 @@
-const express = require('express');
-const mysql = require('mysql2');
+const express = require("express");
+const mysql = require("mysql2");
 const inquirer = require("inquirer");
 
 const PORT = process.env.PORT || 3001;
 const app = express();
 
-// Express middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-// Connect to database
-const db = mysql.createConnection(
-  {
-    host: 'localhost',
-    // MySQL username,
-    user: 'root',
-    // TODO: Add MySQL password
-    password: 'password',
-    database: 'departments_db'
-  }
-);
-
-// Query database
-
-let deletedRow = 2;
-
-// TODO: What is wrong with the call to db.query?
-db.query('DELETE FROM favorite_books WHERE id = ?', deletedRow, (err, deleteResult) => {
-  if (err) {
-    console.log(err);
-  }
-  console.log(deleteResult);
-
-  // Query database
-  db.query('SELECT * FROM favorite_books', function (err, results) {
-    console.log(results);
-  });
+const db = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "password",
+    database: "departments_db"
 });
 
+function startApp() {
+  inquirer
+    .prompt([
+      {
+        type: "list",
+        message: "What would you like to do?",
+        choices: ["View All Departments", "View All Roles", "View All Employees", "Add a Department", "Add a Role", "Add an Employee", "Update Employee Role", "Quit"],
+        name: "Start"
+      }
+    ])
+    .then((choice) => {
+      switch (choice.startApp) {
+        case "View All Departments":
+          viewEmployees();
+          break
+        case "View All Roles":
+          addEmployee();
+          break
+        case "View All Employees":
+          updateEmployee();
+          break
+        case "Add a Department":
+          viewJobs();
+          break
+        case "Add a Role":
+          viewDepartments();
+          break
+        case "Add an Employee":
+          addJob();
+          break
+        case "Update Employee Role":
+          addDepartment();
+          break
+        case "Quit":
+          quit();
+          break
+      }
+    });
+}
 
-// Default response for any other request (Not Found)
-app.use((req, res) => {
-  res.status(404).end();
-});
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});

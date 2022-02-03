@@ -4,22 +4,22 @@ VALUES ("IT"),
        ("Marketing"),
        ("Accounting");
 
-INSERT INTO deptRole (title, salary, department_id)
-VALUES ("Hardware Technician"),
-       ("Help Desk Support"),
-       ("Sales Lead"),
-       ("Salesperson"),
-       ("Chief Marketing Officer"), 
-       ("Creative Director"), 
-       ("Bookkeeper"), 
-       ("Accounting Manager");
+INSERT INTO deptRole (title, salary)
+VALUES ("Hardware Technician", 50000),
+       ("Help Desk Support", 40000),
+       ("Sales Lead", 70000),
+       ("Salesperson", 60000),
+       ("Chief Marketing Officer", 80000), 
+       ("Creative Director", 70000), 
+       ("Bookkeeper", 30000), 
+       ("Accounting Manager", 90000);
 
-INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ("Luka", "Licheli", 1, NULL),
-       ("Steve", "Brown", 2, 001),
-       ("Gina", "Lopez", 3, 002),
-       ("John", "Connor", 4, NULL), 
-       ("Vero", "Martinez", 5, 001),
-       ("Lucy", "Hortello", 6, 002), 
-       ("Mike", "Minto", 7, 001), 
-       ("Jason", "Valencia", 8, 002),  
+INSERT INTO employee (first_name, last_name)
+VALUES ("Luka", "Licheli"),
+       ("Steve", "Brown"),
+       ("Gina", "Lopez"),
+       ("John", "Connor"), 
+       ("Vero", "Martinez"),
+       ("Lucy", "Hortello"), 
+       ("Mike", "Minto"), 
+       ("Jason", "Valencia");
