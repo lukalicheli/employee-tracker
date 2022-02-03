@@ -28,25 +28,25 @@ function startApp() {
     .then((choice) => {
       switch (choice.startApp) {
         case "View All Departments":
-          viewEmployees();
-          break
-        case "View All Roles":
-          addEmployee();
-          break
-        case "View All Employees":
-          updateEmployee();
-          break
-        case "Add a Department":
-          viewJobs();
-          break
-        case "Add a Role":
           viewDepartments();
           break
+        case "View All Roles":
+          viewRoles();
+          break
+        case "View All Employees":
+          viewEmployees();
+          break
+        case "Add a Department":
+          addDepartment();
+          break
+        case "Add a Role":
+          addRole();
+          break
         case "Add an Employee":
-          addJob();
+          addEmployee();
           break
         case "Update Employee Role":
-          addDepartment();
+          updateEmployeeRole();
           break
         case "Quit":
           quit();
