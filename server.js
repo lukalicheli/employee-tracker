@@ -1,15 +1,7 @@
-const express = require("express");
+
 const mysql = require("mysql2");
 const inquirer = require("inquirer");
 const consoleTable = require("console.table");
-
-
-
-const PORT = process.env.PORT || 3001;
-const app = express();
-
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
 
 const db = mysql.createConnection({
     host: "localhost",
@@ -25,11 +17,11 @@ function startApp() {
         type: "list",
         message: "What would you like to do?",
         choices: ["View All Departments", "View All Roles", "View All Employees", "Add a Department", "Add a Role", "Add an Employee", "Update Employee Role", "Quit"],
-        name: "Start"
+        name: "option"
       }
     ])
-    .then((choice) => {
-      switch (choice.startApp) {
+    .then((answers) => {
+      switch (answers.option) {
         case "View All Departments":
           viewDepartments();
           break
@@ -39,34 +31,63 @@ function startApp() {
         case "View All Employees":
           viewEmployees();
           break
-        case "Add a Department":
-          addDepartment();
-          break
-        case "Add a Role":
-          addRole();
-          break
-        case "Add an Employee":
-          addEmployee();
-          break
-        case "Update Employee Role":
-          updateEmployeeRole();
-          break
-        case "Quit":
-          quit();
-          break
+        // case "Add a Department":
+        //   addDepartment();
+        //   break
+        // case "Add a Role":
+        //   addRole();
+        //   break
+        // case "Add an Employee":
+        //   addEmployee();
+        //   break
+        // case "Update Employee Role":
+        //   updateEmployeeRole();
+        //   break
+        // case "Quit":
+        //   quit();
+        //   break
       }
+    }).catch(err => {
+      console.log(err);
     });
 }
 
 const viewDepartments = () => {
-  db.query('SELECT * from department', (err, res) => {
+  db.query('SELECT * from department', (err, viewAllDept) => {
     if (err) {
-      throw err
+      console.log(err);
     } else {
-      consoleTable(res)
+      console.table(viewAllDept);
     }
     startApp();
   })
 }
+
+const viewRoles = () => {
+  db.query('SELECT * from deptRole', (err, viewAllRoles) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.table(viewAllRoles);
+    }
+    startApp();
+  })
+}
+
+const viewEmployees = () => {
+  db.query('SELECT * from deptRole', (err, viewAllEmployees) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.table(viewAllEmployees);
+    }
+    startApp();
+  })
+}
+// addDepartment();
+// addRole();
+// addEmployee();
+// updateEmployeeRole();
+// quit();
 
 startApp();
