@@ -40,20 +40,20 @@ function startApp() {
         case "Add an Employee":
           addEmployee();
           break
-        // case "Update Employee Role":
-        //   updateEmployeeRole();
-        //   break
-        // case "Quit":
-        //   quit();
-        //   break
+        case "Update Employee Role":
+          updateEmployeeRole();
+          break
+        case "Quit":
+          quit();
+          break
       }
     }).catch(err => {
       console.log(err);
     });
-}
+};
 
 const viewDepartments = () => {
-  db.query('SELECT * from department', (err, viewAllDept) => {
+  db.query('SELECT * FROM department', (err, viewAllDept) => {
     if (err) {
       console.log(err);
     } else {
@@ -61,10 +61,10 @@ const viewDepartments = () => {
     }
     startApp();
   })
-}
+};
 
 const viewRoles = () => {
-  db.query('SELECT * from deptRole', (err, viewAllRoles) => {
+  db.query('SELECT * FROM deptRole', (err, viewAllRoles) => {
     if (err) {
       console.log(err);
     } else {
@@ -72,10 +72,10 @@ const viewRoles = () => {
     }
     startApp();
   })
-}
+};
 
 const viewEmployees = () => {
-  db.query('SELECT * from employee', (err, viewAllEmployees) => {
+  db.query('SELECT * FROM employee', (err, viewAllEmployees) => {
     if (err) {
       console.log(err);
     } else {
@@ -83,7 +83,7 @@ const viewEmployees = () => {
     }
     startApp();
   })
-}
+};
 
 const addDepartment = () => {
   inquirer
@@ -93,7 +93,7 @@ const addDepartment = () => {
       message: "Enter new department:",
     }])
     .then((answers) => {
-      db.query(`INSERT INTO department(dept_name) values ('${answers.newDepartment}')`, (err, res) => {
+      db.query(`INSERT INTO department(dept_name) VALUES ('${answers.newDepartment}')`, (err, res) => {
         if (err) {
           throw err
         } else {
@@ -102,7 +102,7 @@ const addDepartment = () => {
         startApp();
       });
     });
-}
+};
 
 const addRole = () => {
   inquirer
@@ -123,7 +123,7 @@ const addRole = () => {
       }
     ])
     .then((answers) => {
-      db.query(`INSERT INTO deptRole(title, salary, department_id) values ('${answers.newRole}', '${answers.newSalary}', '${answers.newDeptId}')`, (err, res) => {
+      db.query(`INSERT INTO deptRole(title, salary, department_id) VALUES ('${answers.newRole}', '${answers.newSalary}', '${answers.newDeptId}')`, (err, res) => {
         if (err) {
           throw err
         } else {
@@ -132,7 +132,7 @@ const addRole = () => {
         startApp();
       });
     });
-}
+};
 
 const addEmployee = () => {
   inquirer
@@ -158,7 +158,7 @@ const addEmployee = () => {
       }
     ])
     .then((answers) => {
-      db.query(`INSERT INTO employee(first_name, last_name, role_id, manager_id) values ('${answers.firstName}', '${answers.lastName}', '${answers.newDeptRole}', '${answers.newManager}')`, (err, res) => {
+      db.query(`INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES ('${answers.firstName}', '${answers.lastName}', '${answers.newDeptRole}', '${answers.newManager}')`, (err, res) => {
         if (err) {
           throw err
         } else {
@@ -168,6 +168,38 @@ const addEmployee = () => {
       });
     });
 };
-// updateEmployeeRole();
+const updateEmployeeRole = () => {
+  db.query('SELECT * FROM employee', (err, res) => {
+    if (err) {
+      throw err
+    } else {
+      console.table(res)
+    }
+    inquirer
+      .prompt([{
+          type: "input",
+          name: "employeeUpdate",
+          message: "Enter employee ID to make changes: ",
+        },
+        {
+          type: "input",
+          name: "newDeptRole",
+          message: "Enter new job ID: ",
+        },
+      ])
+      .then((answers) => {
+        db.query(`UPDATE employee SET role_id = ${answers.newDeptRole} WHERE id = ${answers.employeeUpdate}`);
+        if (err) {
+          throw err
+        } else {
+        }
+        startApp();
+      });
+  })
+};
+
+const quit = () => {
+  process.exit(1);
+};
 
 startApp();
