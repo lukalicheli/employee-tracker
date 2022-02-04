@@ -31,9 +31,9 @@ function startApp() {
         case "View All Employees":
           viewEmployees();
           break
-        // case "Add a Department":
-        //   addDepartment();
-        //   break
+        case "Add a Department":
+          addDepartment();
+          break
         // case "Add a Role":
         //   addRole();
         //   break
@@ -75,7 +75,7 @@ const viewRoles = () => {
 }
 
 const viewEmployees = () => {
-  db.query('SELECT * from deptRole', (err, viewAllEmployees) => {
+  db.query('SELECT * from employee', (err, viewAllEmployees) => {
     if (err) {
       console.log(err);
     } else {
@@ -84,10 +84,28 @@ const viewEmployees = () => {
     startApp();
   })
 }
+
+const addDepartment = () => {
+  inquirer
+    .prompt([{
+      type: "input",
+      name: "newDepartment",
+      message: "Enter new department:",
+    }])
+    .then((answers) => {
+      db.query(`INSERT INTO department(dept_name) values ('${answers.newDepartment}')`, (err, res) => {
+        if (err) {
+          throw err
+        } else {
+          console.table(res)
+        }
+        startApp();
+      });
+    });
+}
 // addDepartment();
 // addRole();
 // addEmployee();
 // updateEmployeeRole();
-// quit();
 
 startApp();
