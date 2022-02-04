@@ -19,7 +19,7 @@ VALUES ("Luka", "Licheli", 1, 1),
        ("Steve", "Brown", 2, 1),
        ("Gina", "Lopez", 3, 1),
        ("John", "Connor", 4, 2), 
-       ("Vero", "Martinez", 1, 1),
-       ("Lucy", "Hortello", 2, 2), 
-       ("Mike", "Minto", 3, 2), 
-       ("Jason", "Valencia", 4, 1);
+       ("Vero", "Martinez", 5, 1),
+       ("Lucy", "Hortello", 6, 2), 
+       ("Mike", "Minto", 7, 2), 
+       ("Jason", "Valencia", 8, 1);

@@ -34,12 +34,12 @@ function startApp() {
         case "Add a Department":
           addDepartment();
           break
-        // case "Add a Role":
-        //   addRole();
-        //   break
-        // case "Add an Employee":
-        //   addEmployee();
-        //   break
+        case "Add a Role":
+          addRole();
+          break
+        case "Add an Employee":
+          addEmployee();
+          break
         // case "Update Employee Role":
         //   updateEmployeeRole();
         //   break
@@ -103,9 +103,71 @@ const addDepartment = () => {
       });
     });
 }
-// addDepartment();
-// addRole();
-// addEmployee();
+
+const addRole = () => {
+  inquirer
+    .prompt([{
+        type: "input",
+        name: "newRole",
+        message: "Enter title",
+      },
+      {
+        type: "input",
+        name: "newSalary",
+        message: "Enter salary",
+      },
+      {
+        type: "input",
+        name: "newDeptId",
+        message: "Enter Department ID:",
+      }
+    ])
+    .then((answers) => {
+      db.query(`INSERT INTO deptRole(title, salary, department_id) values ('${answers.newRole}', '${answers.newSalary}', '${answers.newDeptId}')`, (err, res) => {
+        if (err) {
+          throw err
+        } else {
+          console.table(res)
+        }
+        startApp();
+      });
+    });
+}
+
+const addEmployee = () => {
+  inquirer
+    .prompt([{
+        type: "input",
+        name: "firstName",
+        message: "Enter first name:",
+      },
+      {
+        type: "input",
+        name: "lastName",
+        message: "Enter last name:",
+      },
+      {
+        type: "input",
+        name: "newDeptRole",
+        message: "Enter role ID:",
+      },
+      {
+        type: "input",
+        name: "newManager",
+        message: "Enter manager ID:",
+      }
+    ])
+    .then((answers) => {
+      db.query(`INSERT INTO employee(first_name, last_name, role_id, manager_id) values ('${answers.firstName}', '${answers.lastName}', '${answers.newDeptRole}', '${answers.newManager}')`, (err, res) => {
+        if (err) {
+          throw err
+        } else {
+          console.table(res)
+        }
+        startApp();
+      });
+    });
+};
 // updateEmployeeRole();
 
 startApp();
